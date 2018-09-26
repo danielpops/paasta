@@ -80,6 +80,11 @@
                     "exclusiveMinimum": true,
                     "default": 1024
                 },
+                "gpus": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": false
+                },
                 "instances": {
                     "type": "integer",
                     "minimum": 0,
@@ -213,6 +218,10 @@
                 },
                 "container_port": {
                     "type": "number"
+                },
+                "containerizer_type": {
+                    "type": "string",
+                    "default": "DOCKER"
                 },
                 "deploy_blacklist": {
                     "type": "array"

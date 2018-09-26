@@ -214,6 +214,7 @@ class InstanceConfigDict(TypedDict, total=False):
     extra_docker_args: Dict[str, str]
     gpus: float
     branch: str
+    containerizer_type: str
 
 
 class BranchDictV1(TypedDict, total=False):
@@ -435,13 +436,13 @@ class InstanceConfig:
         disk = self.config_dict.get('disk', default)
         return disk
 
-    def get_gpus(self, default: float=0) -> float:
+    def get_gpus(self) -> Optional[float]:
         """Gets the number of gpus required from the service's configuration.
 
-        Default to 0 if no value is specified in the config.
+        Default to None if no value is specified in the config.
 
         :returns: The number of gpus specified by the config, 0 if not specified"""
-        gpus = self.config_dict.get('gpus', default)
+        gpus = self.config_dict.get('gpus', None)
         return gpus
 
     def get_cmd(self) -> Optional[Union[str, List[str]]]:
@@ -576,6 +577,10 @@ class InstanceConfig:
             return self.branch_dict['force_bounce']
         else:
             return None
+
+    def get_containerizer_type(self) -> str:
+        """Get Mesos containerizer type, DOCKER or MESOS"""
+        return self.config_dict.get('containerizer_type', 'DOCKER')
 
     def check_cpus(self) -> Tuple[bool, str]:
         cpus = self.get_cpus()
