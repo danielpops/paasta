@@ -102,6 +102,10 @@ def get_slack_channels(overrides, service, soa_dir=DEFAULT_SOA_DIR):
     return __get_monitoring_config_value("slack_channels", overrides, service, soa_dir)
 
 
+def get_slack_compact_message(overrides, service, soa_dir=DEFAULT_SOA_DIR):
+    return __get_monitoring_config_value("slack_compact_message", overrides, service, soa_dir)
+
+
 def get_dependencies(overrides, service, soa_dir=DEFAULT_SOA_DIR):
     return __get_monitoring_config_value("dependencies", overrides, service, soa_dir)
 
@@ -217,6 +221,7 @@ def send_event(
         "alert_after": overrides.get("alert_after", "5m"),
         "irc_channels": get_irc_channels(overrides, service, soa_dir),
         "slack_channels": get_slack_channels(overrides, service, soa_dir),
+        "slack_compact_message": get_slack_compact_message(overrides, service, soa_dir),
         "ticket": get_ticket(overrides, service, soa_dir),
         "project": get_project(overrides, service, soa_dir),
         "priority": get_priority(overrides, service, soa_dir),
